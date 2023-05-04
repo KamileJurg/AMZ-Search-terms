@@ -1,0 +1,107 @@
+---
+title: "Data filtering"
+author: "Kamile Jurgaitiene"
+date: "2023-04-27"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Preparation 
+Uploading CSV file to R and skipping not needed line.
+
+```{r cars}
+setwd("/Users/kamilejurgaitiene/Downloads")
+getwd()
+library(readr)
+AmazonQ1 <- read_csv("AmazonQ1.csv", skip=1)
+View(AmazonQ1)
+head(AmazonQ1) #data summary
+colnames(AmazonQ1) #column names
+```
+
+#Delete not needed data
+
+```{r cars}
+library(dplyr)
+AmazonQ1 <- select(AmazonQ1,-"Top Clicked Product #1: Product Title", -"Top Clicked Product #2: Product Title", -"Top Clicked Product #3: Product Title")
+```
+
+#Categories filter 
+We prepare and separate top clicked categories columns (-\> categories) and we combine all Categories we want to
+exclude (-\> delcategories).
+
+The 'for' loops are used to loop over each column and keyword
+combination, and the 'grepl()' function is used to check if each keyword
+is present in each column.
+
+```{r cars}
+categories <- c("Top Clicked Category #1", "Top Clicked Category #2", "Top Clicked Category #3" )
+delcategories <- c("Amazon_Prints","Mobile_Apps", "Apparel", "Video Games", "Software", "Grocery", "Audible", "Books","Digital_Video_Download", "Gift Card", "Furniture", "Shoes")
+
+for (col in categories) {for (kw in delcategories) {AmazonQ1 <- AmazonQ1[!grepl(kw, AmazonQ1[[col]], ignore.case = TRUE),]}}
+```
+
+#Brands filter 
+We prepare and separate top Brands (-\> brands) and we combine all brands we want to exclude (-\> delbrands).
+
+The 'for' loops are used to loop over each column and keyword
+combination, and the 'grepl()' function is used to check if each keyword
+is present in each column.
+
+```{r cars}
+brands <- c("Top Clicked Brand #1", "Top Clicked Brands #2", "Top Clicked Brands #3" )
+delbrands <- c("Apple", "Lenovo", "HP", "beats", "JBL", "Samsung", "BRITA
+", "CeraVe", "Cetaphil", "SanDisk", "Milwaukee")
+
+for (col in brands) {for (kw in delbrands) {AmazonQ1 <- AmazonQ1[!grepl(kw, AmazonQ1[[col]], ignore.case = TRUE),]}}
+```
+
+#Search terms filter 
+We prepare column 'search terms' (-\> terms) and we combine all search term we want to excluede (-\> delterms).
+
+The 'for' loops are used to loop over each column and keyword
+combination, and the 'grepl()' function is used to check if each keyword
+is present in each column.
+
+```{r cars}
+terms <- c("Search Term")
+delterms <- c("Lenovo", "HP", "beats", "JBL", "Samsung", "BRITA
+", "CeraVe", "Cetaphil", "SanDisk", "Milwaukee", "Pokemon", "iphone", "1", "alexa", "kindle", "led lights", "squishmallow", "water bottles", "valentines day gifts", "mouse pad", "valentines cards", "scrub daddy", "valentines day decor","hello kitty", "ipad", "fitbit", "sol de janeiro", "desk organizers and accessories", "airpod pro case")
+
+for (col in terms) {for (kw in delterms) {AmazonQ1 <- AmazonQ1[!grepl(kw, AmazonQ1[[col]], ignore.case = TRUE),]}}
+```
+
+#Search terms finder 
+
+If we want to find certain search terms just change word "japanese knife" to any of the interest.
+
+```{r cars}
+matches <- apply(AmazonQ1, 1, function(x) any(grepl("japanese knife", x)))
+AmazonQ1[matches, ]
+View(AmazonQ1[matches, ])
+```
+
+#Select certain range 
+If we want to select certain range of date in terms of SFR and Top clicked click share.
+
+```{r cars}
+#SFR
+Orbio <-AmazonQ1[AmazonQ1$`Search Frequency Rank` >= 2000 & AmazonQ1$`Search Frequency Rank` <= 100000, ]
+View(Orbio)
+
+#Top clicked click share
+Orbio[Orbio$`Top Clicked Product #1: Click Share` >= 9 & Orbio$`Top Clicked Product #1: Click Share` <= 100, ]
+View(Orbio)
+```
+
+#export file
+
+```{r cars}
+write.csv(AmazonQ1, "output_AMZQ1.csv", row.names = FALSE)
+```
