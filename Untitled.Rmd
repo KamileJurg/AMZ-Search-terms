@@ -42,7 +42,7 @@ is present in each column.
 
 ```{r cars}
 categories <- c("Top Clicked Category #1", "Top Clicked Category #2", "Top Clicked Category #3" )
-delcategories <- c("Amazon_Prints","Mobile_Apps", "Apparel", "Video Games", "Software", "Grocery", "Audible", "Books","Digital_Video_Download", "Gift Card", "Furniture", "Shoes")
+delcategories <- c("Amazon_Prints","Mobile_Apps", "Apparel", "Video Games", "Software", "Grocery", "Audible", "Books","Digital_Video_Download", "Gift Card", "Furniture", "Shoes", )
 
 for (col in categories) {for (kw in delcategories) {AmazonQ1 <- AmazonQ1[!grepl(kw, AmazonQ1[[col]], ignore.case = TRUE),]}}
 ```
@@ -57,7 +57,7 @@ is present in each column.
 ```{r cars}
 brands <- c("Top Clicked Brand #1", "Top Clicked Brands #2", "Top Clicked Brands #3" )
 delbrands <- c("Apple", "Lenovo", "HP", "beats", "JBL", "Samsung", "BRITA
-", "CeraVe", "Cetaphil", "SanDisk", "Milwaukee")
+", "CeraVe", "Cetaphil", "SanDisk", "Milwaukee", "LEGO", "Sony", "Dove", "Hallmark", "Pokemon", "Maybelline", "L'OREAL PARIS", "Air Wick", "KitchenAid", "Nivea", "NIKE", "Garnier", "Pampers", "Fisher-price", "Energizer", "DURACELL", "KODAK", "COVERGIRL", "Canon", "REVLON", "CRAYOLA")
 
 for (col in brands) {for (kw in delbrands) {AmazonQ1 <- AmazonQ1[!grepl(kw, AmazonQ1[[col]], ignore.case = TRUE),]}}
 ```
@@ -71,8 +71,7 @@ is present in each column.
 
 ```{r cars}
 terms <- c("Search Term")
-delterms <- c("Lenovo", "HP", "beats", "JBL", "Samsung", "BRITA
-", "CeraVe", "Cetaphil", "SanDisk", "Milwaukee", "Pokemon", "iphone", "1", "alexa", "kindle", "led lights", "squishmallow", "water bottles", "valentines day gifts", "mouse pad", "valentines cards", "scrub daddy", "valentines day decor","hello kitty", "ipad", "fitbit", "sol de janeiro", "desk organizers and accessories", "airpod pro case")
+delterms <- c("Lenovo", "HP", "beats", "JBL", "Samsung", "BRITA", "CeraVe", "Cetaphil", "SanDisk", "Milwaukee", "Pokemon", "iphone", "1", "alexa", "kindle", "led lights", "squishmallow", "water bottles", "valentines day gifts", "mouse pad", "valentines cards", "scrub daddy", "valentines day decor","hello kitty", "ipad", "fitbit", "sol de janeiro", "desk organizers and accessories", "airpod pro case", "Shampoo", "Tylenol", "lotion", "lashes", "tattoo", "handsoap", "decor", "stickers", "Disney", "nail polish", "paint", "perfume", "sex", "supplement")
 
 for (col in terms) {for (kw in delterms) {AmazonQ1 <- AmazonQ1[!grepl(kw, AmazonQ1[[col]], ignore.case = TRUE),]}}
 ```
